@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const Post = require('./models/post')
 
 const app = express();
 
@@ -19,7 +20,11 @@ app.set('view engine', 'handlebars');
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-    res.render('home');
+    Post.find({}).lean()
+    .then((posts) => res.render('post-index', {posts}))
+    .catch((err) => {
+        console.log(err.message);
+    })
 });
 
 // POSTS
