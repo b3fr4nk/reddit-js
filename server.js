@@ -1,8 +1,8 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const Post = require('./models/post')
-
 const app = express();
+
 
 // Validators
 app.use(express.json());
@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 
 // NEW
 app.get('/posts/new', function (req, res) {
-    res.render('new-post', {});
+    res.render('post-new', {});
 });
 
 app.listen(3000)
