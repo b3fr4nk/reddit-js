@@ -1,6 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const Post = require('./models/post')
+const Post = require('./models/post');
 const app = express();
 
 
@@ -13,6 +13,7 @@ require('./data/reddit-db');
 
 // Controllers
 require('./controllers/posts')(app);
+require('./controllers/comments')(app);
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
@@ -25,13 +26,6 @@ app.get('/', function (req, res) {
     .catch((err) => {
         console.log(err.message);
     })
-});
-
-// POSTS
-
-// NEW
-app.get('/posts/new', function (req, res) {
-    res.render('post-new', {});
 });
 
 app.listen(3000)
