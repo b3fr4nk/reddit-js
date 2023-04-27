@@ -1,12 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 const Post = require('./models/post');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 
 // Validators
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Set db
 require('./data/reddit-db');
@@ -14,6 +17,7 @@ require('./data/reddit-db');
 // Controllers
 require('./controllers/posts')(app);
 require('./controllers/comments')(app);
+require('./controllers/auth')(app);
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
