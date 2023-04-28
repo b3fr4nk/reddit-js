@@ -2,6 +2,39 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
+    // LOGIN
+    app.post('/login', (req, res) => {
+        const {username, password} = req.body;
+        //find the user
+        User.findOne({username}, 'username password')
+        .then((user) => {
+            if(!user){
+                //user not found
+                return res.status(401).send({message: 'Wrong username or password'});
+            }
+            //check the password
+            user.comparePassword(password, (err, isMatch) => {
+                if(!isMatch){
+                    //password does not match
+                    return res.status(401).send({ message: 'Wrong username or password'});
+                }
+                const token = jwt.sign({_id: user._id, username: user.username}, process.env.SECRET, {
+                    expiresIn: '60 days'
+                });
+                // Set a cookie and redirect to root
+                res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+                return res.redirect('/');
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    });
+
+    app.get('/login', (req, res) => {
+        return res.render('login')
+    })
+
     // SIGN UP FORM
     app.post('/sign-up', (req, res) => {
         // Create User and JWT
