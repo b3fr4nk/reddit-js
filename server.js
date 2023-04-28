@@ -2,9 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 const Post = require('./models/post');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const app = express();
-
 
 // Validators
 app.use(express.json());

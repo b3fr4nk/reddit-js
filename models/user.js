@@ -6,6 +6,7 @@ const userSchema = new Schema({
     password: { type: String, select: false},
 }, {timestamps: true});
 
+
 // Must use function expressions here! ES6 => functions do not bind this!
 userSchema.pre('save', function (next) {
   // ENCRYPT PASSWORD
