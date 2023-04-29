@@ -16,12 +16,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li>
-                        <a href="/posts/new" class="btn btn-primary navbar-btn">New Post</a>
-                    </li>
-                    <li><a href="/logout">Logout</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/sign-up">Sign Up</a></li>
+                    {{#if currentUser}}
+                        <li class="nav-item">
+                        <a class="nav-link" href="/posts/new">New Post</a>
+                        </li>
+                    {{/if}}
+                    <ul class="nav navbar-nav navbar-right">
+                        {{#if currentUser}}
+                            <li><a href="/logout">Logout</a></li>
+                        {{else}}
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/sign-up">Sign Up</a></li>
+                        {{/if}}
+                    </ul>
                 </ul>
             </div>
         </div>
