@@ -3,6 +3,7 @@
     <a href="{{post.url}}" class="lead">{{post.title}}</a>
     <p>{{post.summary}}</p>
     <p>{{post.subreddit}}</p>
+    <p>{{post.author.username}}</p>
     {{#each post.comments}}
       <p>{{this.content}}</p>
     {{/each}}

@@ -28,7 +28,7 @@ app.set('view engine', 'handlebars');
 app.get('/', function (req, res) {
     const currentUser = req.user;
 
-    Post.find({}).lean()
+    Post.find({}).lean().populate('author')
     .then((posts) => res.render('post-index', {posts, currentUser}))
     .catch((err) => {
         console.log(err.message);
