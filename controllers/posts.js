@@ -25,8 +25,9 @@ module.exports = (app) => {
 
   // LOOK UP THE POST
   app.get('/posts/:id', (req, res) => {
-    Post.findById(req.params.id).lean().populate('comments').populate('author')
-      .then((post) => res.render('posts-show', { post }))
+    const currentUser = req.user;
+    Post.findById(req.params.id).lean().populate({ path:'comments' , populate: {path:'author'}}).populate('author')
+      .then((post) => res.render('posts-show', { post, currentUser }))
       .catch((err) => {
         console.log(err.message);
       });
@@ -34,8 +35,10 @@ module.exports = (app) => {
 
   //SUBREDDIT
   app.get('/n/:subreddit', (req, res) => {
-    Post.find({subreddit: req.params.subreddit}).lean()
-    .then((posts) => res.render('posts-index', {posts}))
+    const currentUser = req.user;
+    const { subreddit } = req.params;
+    Post.find({subreddit}).lean().populate('author')
+    .then((posts) => res.render('posts-index', {posts, currentUser}))
     .catch((err) => {
       console.log(err);
     })
