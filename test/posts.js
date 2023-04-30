@@ -47,13 +47,14 @@ describe('Posts', () => {
                 .catch((err) => {
                     done(err);
                 });
+                done();
             })
             .catch((err) => {
                 done(err);
             });
         });
 
-        after(() => {
+    after(() => {
         Post.findOneAndDelete(newPost);
     });
 
