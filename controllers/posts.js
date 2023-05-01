@@ -26,7 +26,7 @@ module.exports = (app) => {
   // LOOK UP THE POST
   app.get('/posts/:id', (req, res) => {
     const currentUser = req.user;
-    Post.findById(req.params.id).lean().populate({ path:'comments' , populate: {path:'author'}}).populate('author')
+    Post.findById(req.params.id).lean()
       .then((post) => res.render('posts-show', { post, currentUser }))
       .catch((err) => {
         console.log(err.message);
@@ -37,7 +37,7 @@ module.exports = (app) => {
   app.get('/n/:subreddit', (req, res) => {
     const currentUser = req.user;
     const { subreddit } = req.params;
-    Post.find({subreddit}).lean().populate('author')
+    Post.find({subreddit}).lean()
     .then((posts) => res.render('posts-index', {posts, currentUser}))
     .catch((err) => {
       console.log(err);
