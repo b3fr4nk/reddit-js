@@ -19,6 +19,7 @@ require('./data/reddit-db');
 require('./controllers/posts')(app);
 require('./controllers/comments')(app);
 require('./controllers/auth')(app);
+require('./controllers/replies')(app);
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');

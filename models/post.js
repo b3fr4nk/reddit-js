@@ -13,6 +13,8 @@ const postSchema = new Schema({
 // Always populate the author field
 postSchema
   .pre('findOne', Populate('author'))
-  .pre('find', Populate('author'));
+  .pre('find', Populate('author'))
+  .pre('findOne', Populate('comments'))
+  .pre('find', Populate('comments'));
 
 module.exports = model('Post', postSchema);
