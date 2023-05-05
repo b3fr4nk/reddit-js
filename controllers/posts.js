@@ -10,6 +10,9 @@ module.exports = (app) => {
       const userId = req.user._id;
       const post = new Post(req.body);
       post.author = userId;
+      post.upVotes = [];
+      post.downVotes = [];
+      post.voteScore = 0;
 
       // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
       post.save(() => res.redirect('/'));
@@ -42,6 +45,34 @@ module.exports = (app) => {
     .catch((err) => {
       console.log(err);
     })
+  });
+
+  // Update votes
+  app.put('/posts/:id/vote-up', (req, res) => {
+    Post.findById(req.params.id).then(post => {
+      post.upVotes.push(req.user._id);
+      post.voteScore += 1;
+      post.save();
+
+      return res.status(200);
+    }).catch(err => {
+      console.log(err);
+    })
+  });
+
+  app.put('/posts/:id/vote-down', (req, res) => {
+    if(req.user){
+      Post.findById(req.params.id).then(post => {
+        post.downVotes.push(req.user._id);
+        post.voteScore -= 1;
+        post.save();
+
+        return res.status(200);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+    
   });
 
 };

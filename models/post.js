@@ -7,7 +7,10 @@ const postSchema = new Schema({
   summary: { type: String, required: true },
   subreddit: { type: String, required: true},
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', required: false}],
-  author: {type: Schema.Types.ObjectId, ref: 'User', required: true}
+  author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+  upVotes : [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  downVotes : [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  voteScore : { type: Number }
 });
 
 // Always populate the author field
